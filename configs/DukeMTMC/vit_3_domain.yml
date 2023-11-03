@@ -1,0 +1,89 @@
+MODEL:
+  # Imagenet is dataset,not pretrain module
+  PRETRAIN_CHOICE: 'imagenet'
+  PRETRAIN_PATH: 'F:/mym/code/reid_base/reid_adv/pre_weight/jx_vit_base_p16_224-80ecf9dd.pth'
+  METRIC_LOSS_TYPE: 'triplet'
+  IF_LABELSMOOTH: 'off'
+  IF_WITH_CENTER: 'no'
+  NAME: 'transformer'
+  NO_MARGIN: True
+  DEVICE_ID: ('1')
+  TRANSFORMER_TYPE: 'vit_base_patch16_224_TransReID'
+  STRIDE_SIZE: [16, 16]
+  THREE_DOMAIN: True
+
+INPUT:
+  SIZE_TRAIN: [256, 128]
+  SIZE_TEST: [256, 128]
+  PROB: 0.5 # random horizontal flip
+  RE_PROB: 0.5 # random erasing
+  PADDING: 10
+  PIXEL_MEAN: [0.5, 0.5, 0.5]
+  PIXEL_STD: [0.5, 0.5, 0.5]
+
+DATASETS:
+  NAMES: ('market1501')
+  TARGET: ('dukemtmc')
+  ROOT_DIR: ('F:/mym/datasets/datasets/')
+
+#DATASETS:
+#  NAMES: ('market1501')
+#  TARGET: ('dukemtmc')
+#  ROOT_DIR: ('E:/KUST/NewKU/Trans_a_t2s/data')
+
+# in datalodaer.py
+# __factory = {
+  #    'market1501': Market1501,
+  #    'dukemtmc': DukeMTMCreID,
+  #    'msmt17': MSMT17,
+  #    'occ_duke': OCC_DukeMTMCreID,
+  #}
+
+#DATASETS:
+#  NAMES: ('market1501')
+#  TARGET: ('dukemtmc')
+#  ROOT_DIR: ('E:/KUST/NewKU/Trans_a_t2s/data')
+
+#DATASETS:
+#  NAMES: ('dukemtmc')
+#  TARGET: ('msmt17')
+#  ROOT_DIR: ('E:/KUST/NewKU/Trans_a_t2s/data')
+
+DATALOADER:
+  SAMPLER: 'softmax_triplet'
+  # each ID contains Num_Instance Image
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 0
+  CAMERA_NUM: 6
+
+SOLVER:
+  OPTIMIZER_NAME: 'SGD'
+#  MAX_EPOCHS: 120
+  MAX_EPOCHS: 200
+  #BASE_LR:0.0016
+  BASE_LR: 0.0016
+  #origin C_LR: 0.00012
+  #C_LR:1.2e-4
+  C_LR: 1.2e-4
+  IMS_PER_BATCH: 16
+  WARMUP_METHOD: 'linear'
+  LARGE_FC_LR: False
+  CHECKPOINT_PERIOD: 40
+  LOG_PERIOD: 50
+  EVAL_PERIOD: 1
+  WEIGHT_DECAY:  1e-4
+  WEIGHT_DECAY_BIAS: 1e-4
+  BIAS_LR_FACTOR: 2
+
+TEST:
+  EVAL: True
+  IMS_PER_BATCH: 256
+  RE_RANKING: False
+  # WEIGHT: 'D:/code2/Trans_domain_reid/logs/b16_duke_vit_base_no_eras2\transformer_120.pth'
+  WEIGHT: 'E:/KUST/NewKU/t2sBack/Trans_two_t2s_101321/logs/2_classifers/oriBest/bestResult_72.pth'
+  # WEIGHT: 'E:/KUST/NewKU/t2sBack/Trans_two_t2s_101321/logs/2_classifers/bestResult_72.pth'
+  NECK_FEAT: 'after'
+  FEAT_NORM: 'yes'
+
+OUTPUT_DIR: './logs/d2m_sct'
+

@@ -1,0 +1,73 @@
+MODEL:
+  PRETRAIN_CHOICE: 'imagenet'
+  PRETRAIN_PATH: 'E:/KUST/NewKU/Trans_a_t2s/jx_vit_base_p16_224-80ecf9dd.pth'
+  METRIC_LOSS_TYPE: 'triplet'
+  IF_LABELSMOOTH: 'off'
+  IF_WITH_CENTER: 'no'
+  NAME: 'transformer'
+  NO_MARGIN: True
+  DEVICE_ID: ('0')
+  TRANSFORMER_TYPE: 'vit_base_patch16_224_TransReID'
+  STRIDE_SIZE: [16, 16]
+  THREE_DOMAIN: True
+  LAMBDA_VALUE: 0
+  GPU : True
+  LR: 0.00035
+  WEIGHT_DECAY: 5e-4
+
+INPUT:
+  SIZE_TRAIN: [256, 128]
+  SIZE_TEST: [256, 128]
+  PROB: 0.5 # random horizontal flip
+  RE_PROB: 0.5 # random erasing
+  PADDING: 10
+  PIXEL_MEAN: [0.5, 0.5, 0.5]
+  PIXEL_STD: [0.5, 0.5, 0.5]
+  C_CAM: 15
+  T_CAM: 6
+  C_ID: 1041
+  T_ID: 751
+DATASETS:
+  NAMES: ('msmt17')
+  TARGET: ('marketSCT')
+  ROOT_DIR: ('E:/KUST/NewKU/Trans_a_t2s/data')
+
+
+
+DATALOADER:
+  SAMPLER: 'softmax_triplet'
+  # each ID contains Num_Instance Image
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 0
+  CAMERA_NUM: 8
+
+SOLVER:
+  OPTIMIZER_NAME: 'SGD'
+  #  MAX_EPOCHS: 120
+  MAX_EPOCHS: 400
+  BASE_LR: 0.0016
+  C_LR: 1.2e-4
+  CITRA_IMS_PER_BATCH: 32
+  IMS_PER_BATCH: 16 #16
+  WARMUP_METHOD: 'linear'
+  LARGE_FC_LR: False
+  CHECKPOINT_PERIOD: 40
+  LOG_PERIOD: 50
+  EVAL_PERIOD: 20
+  WEIGHT_DECAY:  1e-4
+  WEIGHT_DECAY_BIAS: 1e-4
+  BIAS_LR_FACTOR: 2
+
+TEST:
+  EVAL: True
+  IMS_PER_BATCH: 256
+  RE_RANKING: False
+  WEIGHT: 'E:/KUST/NewKU/testModel/bestResult.pth'
+  NECK_FEAT: 'before'
+  FEAT_NORM: 'yes'
+
+OUTPUT_DIR: './logs'
+
+
+
+
