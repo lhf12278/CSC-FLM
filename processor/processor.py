@@ -11,7 +11,7 @@ import torch.nn.functional as F
 import numpy as np
 import collections
 from sklearn.cluster import DBSCAN
-from DBSCAN1.reranking import compute_jaccard_dist
+from cluster.reranking import compute_jaccard_dist
 from datasets.bases import ImageDataset
 from loss.make_loss import kl_loss
 from torch.utils.data import DataLoader

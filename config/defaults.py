@@ -180,7 +180,7 @@ _C.SOLVER.EVAL_PERIOD = 10
 # contain 16 images per batch
 _C.SOLVER.IMS_PER_BATCH = 64
 
-#DBSCAN1 parameters
+#cluster parameters
 _C.LAMBDA_VALUE = 0
 _C.RR_GPU = True   #help="use GPU for accelerating clustering")
 
