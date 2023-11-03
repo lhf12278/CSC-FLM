@@ -60,12 +60,11 @@ data
 │            └── query
 
 ├── MSMT17
-│   └── test
-│   └── train
-│   └── list_gallery.txt
-│   └── list_query.txt
-│   └── list_train.txt
-│   └── list_val.txt
+│       └── test
+│       └── train
+│       └── list_gallery.txt
+│       └── list_query.txt
+│       └── list_val.txt
 
 ```
 
